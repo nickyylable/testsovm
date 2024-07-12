@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест на совместимость</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f8ff;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            font-size: 18px;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            display: none;
+            font-size: 36px;
+            color: #ff4500;
+        }
+
+        .animation {
+            display: none;
+            margin-top: 20px;
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .heart {
+            display: none;
+            font-size: 100px;
+            color: red;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .slider {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 1s ease-in-out;
+        }
+
+        .slide {
+            min-width: 300px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+        }
+
+        .slider-text {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+            animation: fadeIn 1s infinite alternate;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="slider-text" class="slider-text">Любимая?</div>
+        <div class="slider">
+            <div class="slides">
+                <div class="slide">
+                    <img src="1.png" alt="Любимая?">
+                </div>
+                <div class="slide">
+                    <img src="2.png" alt="Незаменимая">
+                </div>
+                <div class="slide">
+                    <img src="3.png" alt="Невероятно Красивая">
+                </div>
+            </div>
+        </div>
+        <h1>Тест на совместимость</h1>
+        <input type="text" id="name1" placeholder="Ваше имя">
+        <input type="text" id="name2" placeholder="Имя партнера">
+        <button onclick="checkCompatibility()">Проверить</button>
+        <div class="animation"></div>
+        <div class="heart">❤️</div>
+        <div class="result"></div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelector('.slides');
+        const sliderText = document.getElementById('slider-text');
+        const slideInterval = setInterval(nextSlide, 3000);
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.children.length;
+            updateSlidePosition();
+            updateSliderText();
+        }
+
+        function updateSlidePosition() {
+            slides.style.transform = `translateX(-${currentSlide * 300}px)`;
+        }
+
+        function updateSliderText() {
+            const texts = ['Любимая?', 'Незаменимая', 'Невероятно Красивая'];
+            sliderText.innerText = texts[currentSlide];
+        }
+
+        function checkCompatibility() {
+            clearInterval(slideInterval);
+            document.querySelector('.animation').style.display = 'block';
+            document.querySelector('.heart').style.display = 'block';
+            document.querySelector('.result').style.display = 'none';
+
+            setTimeout(() => {
+                document.querySelector('.animation').style.display = 'none';
+                document.querySelector('.heart').style.display = 'none';
+                document.querySelector('.result').style.display = 'block';
+
+                const name1 = document.getElementById('name1').value.toLowerCase();
+                const name2 = document.getElementById('name2').value.toLowerCase();
+                const names = [name1, name2];
+
+                if ((names.includes('никита') && (names.includes('мария') || names.includes('маша'))) ||
+                    (names.includes('nickyy') && names.includes('maria'))) {
+                    document.querySelector('.result').innerText = '100000000000000000000%';
+                } else {
+                    document.querySelector('.result').innerText = 'Все балбесы, совместимы только Никита и Мария';
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
