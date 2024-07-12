@@ -62,6 +62,8 @@
             border-top: 16px solid #3498db;
             border-radius: 50%;
             animation: spin 2s linear infinite;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         @keyframes spin {
@@ -74,6 +76,8 @@
             font-size: 100px;
             color: red;
             animation: pulse 1s infinite;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         @keyframes pulse {
@@ -178,8 +182,8 @@
                 document.querySelector('.heart').style.display = 'none';
                 document.querySelector('.result').style.display = 'block';
 
-                const name1 = document.getElementById('name1').value.toLowerCase();
-                const name2 = document.getElementById('name2').value.toLowerCase();
+                const name1 = document.getElementById('name1').value.toLowerCase().trim();
+                const name2 = document.getElementById('name2').value.toLowerCase().trim();
                 const names = [name1, name2];
 
                 if ((names.includes('никита') && (names.includes('мария') || names.includes('маша'))) ||
